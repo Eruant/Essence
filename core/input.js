@@ -57,5 +57,10 @@ Input.prototype.touchEvent = function() {
 }
 
 Input.prototype.gamepadEvent = function() {
- // to be worked out
+  
+  this.connectGamepad = function(e) {
+    this.gamepadId = e.gamepad.id;
+  }
+
+  window.addEventListener("MozGamepadConnected", gamepadConnected, false);
 }
