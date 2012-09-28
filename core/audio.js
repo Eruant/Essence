@@ -47,6 +47,7 @@ Essence.prototype.audio = new function() {
     }
   };
 
+  // stops sound from looping
   this.stopLooping = function(handle) {
     var sound = this.sounds[handle];
     if(typeof sound.loop == 'boolean') {
@@ -61,10 +62,12 @@ Essence.prototype.audio = new function() {
     this.sounds[handle].volume = volume;
   };
 
+  // silence the audio without changing the volume
   this.mute = function(handle) {
     this.sounds[handle].muted = true;
   };
 
+  // restores the audio to volume level
   this.unmute = function(handle) {
     this.sounds[handle].muted = false;
   };
@@ -80,23 +83,27 @@ Essence.prototype.audio = new function() {
       sound.muted = false;
     }
   };
-
-/*
-
-    this.isPlaying = function() {
+  
+  this.isPlaying = function(handle) {
+    return !this.sounds[handle].paused;
+  };
+  
+  this.isStopped = function(handle) {
+    return this.sounds[handle].paused;
+  };
+  
+  this.isLooping = function(handle) {
+    var sound = this.sounds[handle];
+    if(typeof sound.loop == 'boolean') {
+      return sound.loop;
+    } else {
+      // TODO remove any event listeners that loop the sound
     }
-
-    this.isStopped = function() {
-    }
-
-    this.isLooping = function() {
-    }
-
-    this.dispose = function() {
-    }
-
-  }
-
-  }*/
+  };
+  
+  // TODO need to check if this actually works
+  this.delete = function(handle) {
+    delete this.sounds[handle];
+  };
 
 };
