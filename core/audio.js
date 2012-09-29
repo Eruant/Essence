@@ -25,13 +25,26 @@ Essence.prototype.audio = new function() {
 
   // pause a sound
   this.pause = function(handle) {
-    this.sounds[handle].pause();
+    var sound = this.sounds[handle];
+    if(sound.paused) {
+      sound.play();
+    } else {
+      sound.pause();
+    }
   };
 
   // pauses and rewinds a sound
   this.stop = function(handle) {
     var sound = this.sounds[handle];
     sound.pause();
+    if(sound.currentTime !== 0) {
+      sound.currentTime = 0;
+    }
+  };
+
+  // rewinds to the beginning
+  this.rewind = function(handle) {
+    var sound = this.sounds[handle];
     if(sound.currentTime !== 0) {
       sound.currentTime = 0;
     }
@@ -72,7 +85,8 @@ Essence.prototype.audio = new function() {
     this.sounds[handle].muted = false;
   };
 
-  this.muteAll = function(handle) {
+  // TODO fix this
+  this.muteAll = function() {
     for(var sound in this.sounds) {
       sound.muted = true;
     }
@@ -83,11 +97,20 @@ Essence.prototype.audio = new function() {
       sound.muted = false;
     }
   };
-  
+
+  //fade track out to volume
+  this.fadeTo = function(handle, time, volume) {
+    // TODO loop to the set volume over set time
+  };
+
+  // do the same for fade out + in
+ 
+  // TODO make this acutally work
   this.isPlaying = function(handle) {
     return !this.sounds[handle].paused;
   };
   
+  // TODO make this work
   this.isStopped = function(handle) {
     return this.sounds[handle].paused;
   };
@@ -101,7 +124,6 @@ Essence.prototype.audio = new function() {
     }
   };
   
-  // TODO need to check if this actually works
   this.delete = function(handle) {
     delete this.sounds[handle];
   };
