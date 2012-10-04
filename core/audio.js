@@ -85,26 +85,62 @@ Essence.prototype.audio = new function() {
     this.sounds[handle].muted = false;
   };
 
-  // TODO fix this
   this.muteAll = function() {
     for(var sound in this.sounds) {
-      sound.muted = true;
+      this.sounds[sound].muted = true;
     }
   };
 
   this.unmuteAll = function(handle) {
     for(var sound in this.sounds) {
-      sound.muted = false;
+      this.sounds[sound].muted = false;
     }
   };
 
   //fade track out to volume
   this.fadeTo = function(handle, time, volume) {
-    // TODO loop to the set volume over set time
+    var zero_volume = false;
+    if(volume === 0) {
+      volume = 0.01;
+      zero_volume = true;
+    }
+    var volume_difference = this.sounds[handle].volume - volume,
+      volume_per_step = volume_difference / time,
+      step_size = 1,
+      t = this;
+    
+    // work out how much to raise the volume by
+    while(volume_per_step < 0.01) { 
+      step_size *= 10;
+      volume_per_step *= 10;
+    }
+    volume_per_step = volume_per_step.toFixed(2);
+
+    this.changeVolume = function(volume) {
+
+      // if volume is near correct level
+      if(volume-volume_per_step < volume_per_step) {
+        if(zero_volume) {
+          t.sounds[handle].volume = 0;
+        } else {
+          t.sounds[handle].volume = t.sounds[handle].volume.toFixed(2);
+        }
+        return 1;
+      } else  /* recursivly lower volume */ {
+        t.sounds[handle].volume -= volume_per_step;
+        volume -= volume_per_step;
+        var cv = this;
+        setTimeout(function(){cv.changeVolume(volume)},step_size);
+      }
+
+      // TODO work out how to fade up volume without affecting rest of function
+
+    };
+
+    this.changeVolume(volume_difference);
+   
   };
 
-  // do the same for fade out + in
- 
   // TODO make this acutally work
   this.isPlaying = function(handle) {
     return !this.sounds[handle].paused;
