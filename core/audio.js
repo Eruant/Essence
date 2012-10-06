@@ -7,10 +7,18 @@
 * This module deals with sound fx and music
 */
 
-Essence.prototype.audio = new function() {
+Essence.prototype.Audio = new function() {
 
   // object to load sounds into
   this.sounds = new Object();
+
+  // check support
+  this.checkSupport = function(handle) {
+    // get type
+    // check if this can be played
+    // this.sounds[handle].canPlayType(type);
+    // return true / false
+  }
 
   // load a file into the sounds object
   this.load = function(filename,handle) {

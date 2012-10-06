@@ -7,35 +7,45 @@
 * This module deals with getting user input from the device
 */
 
-function Input() {
-  this.isKeyPressed(keyCode) {
+Essence.prototype.Input = new function() {
+
+  this.isKeyPressed = function(e,keyCode) {
+    var e = e || window.event;
+    if(e.keyCode && e.keyCode == keyCode) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
-  function isTouchDown(pointer) {
+  this.isTouchDown = function(pointer) {
   }
 
-  function getTouchX(pointer) {
+  this.getTouchX = function(pointer) {
   }
 
-  function getTouchY(pointer) {
+  this.getTouchY = function(pointer) {
   }
 
-  function getAccelX() {
+  this.getAccelX = function() {
   }
 
-  function getAccelY() {
+  this.getAccelY = function() {
   }
 
-  function getAccelZ() {
+  this.getAccelZ = function() {
   }
 
-  function getKeyEvents() {
+  this.getKeyEvents = function() {
   }
 
-  function getTouchEvents() {
+  this.getTouchEvents = function() {
   }
 }
 
+ // not sure if this is the best way to add the key events
+
+/*
 Input.prototype.keyEvent = function() {
   this.KEY_UP = 1;
   this.KEY_DOWN = 0;
@@ -64,3 +74,4 @@ Input.prototype.gamepadEvent = function() {
 
   window.addEventListener("MozGamepadConnected", gamepadConnected, false);
 }
+*/
