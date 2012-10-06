@@ -2,7 +2,7 @@
 * ESSENCE AUDIO
 * ====================
 * Author:   Matt Gale (info@littleball.co.uk)
-* Version:  0.0.1
+* Version:  0.0.3
 *
 * This module deals with sound fx and music
 */
@@ -99,54 +99,37 @@ Essence.prototype.audio = new function() {
 
   //fade track out to volume
   this.fadeTo = function(handle, time, volume) {
-    var zero_volume = false;
-    if(volume === 0) {
-      volume = 0.01;
-      zero_volume = true;
-    }
-    var volume_difference = this.sounds[handle].volume - volume,
-      volume_per_step = volume_difference / time,
-      step_size = 1,
-      t = this;
-    
-    // work out how much to raise the volume by
-    while(volume_per_step < 0.01) { 
-      step_size *= 10;
-      volume_per_step *= 10;
-    }
-    volume_per_step = volume_per_step.toFixed(2);
 
-    this.changeVolume = function(volume) {
+    var v_diff,amount,steps,interval;
 
-      // if volume is near correct level
-      if(volume-volume_per_step < volume_per_step) {
-        if(zero_volume) {
+    this.setVolume = function(t,handle,steps,amount,interval) {
+      if(steps > 0) {
+        if(t.sounds[handle].volume + amount > 1) {
+          t.sounds[handle].volume = 1;
+        } else if(t.sounds[handle].volume + amount < 0) {
           t.sounds[handle].volume = 0;
         } else {
-          t.sounds[handle].volume = t.sounds[handle].volume.toFixed(2);
+          t.sounds[handle].volume += amount;
         }
-        return 1;
-      } else  /* recursivly lower volume */ {
-        t.sounds[handle].volume -= volume_per_step;
-        volume -= volume_per_step;
-        var cv = this;
-        setTimeout(function(){cv.changeVolume(volume)},step_size);
+        setTimeout(function(){
+          t.setVolume(t,handle,steps-1,amount,interval);
+        },interval);
       }
-
-      // TODO work out how to fade up volume without affecting rest of function
-
     };
+    
+    v_diff = volume - this.sounds[handle].volume;
+    steps = 20;
+    amount = v_diff / steps;
+    interval = time / steps;
 
-    this.changeVolume(volume_difference);
+    this.setVolume(this,handle,steps,amount,interval);
    
   };
 
-  // TODO make this acutally work
   this.isPlaying = function(handle) {
     return !this.sounds[handle].paused;
   };
   
-  // TODO make this work
   this.isStopped = function(handle) {
     return this.sounds[handle].paused;
   };
