@@ -1,5 +1,5 @@
 # Essence #
-A javascript engin for creating canvas based environments
+A javascript engine for creating canvas based environments
 
 
 ## Modules ##
