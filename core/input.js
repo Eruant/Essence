@@ -9,8 +9,49 @@
 
 Essence.prototype.Input = new function() {
 
+  // --- variables
+
+  // private variables
+  var t = this,
+    getEvent;
+
+  // public variables
+  this.activeKeys = new Array();
+
+  // --- private functions
+
+  // get event
+  getEvent = function(e) {
+    return e || window.event;
+  };
+
+  // --- public funtions
+
+  // activate the key listener (if used)
+  this.keyListener = function() {
+    window.addEventListener('keydown', t.keyPressed, false);
+    window.addEventListener('keyup', t.keyReleased, false);
+  };
+
+  // point a listener at this funtion
+  this.keyPressed = function(e) {
+    var e = getEvent(e);
+    if(t.activeKeys.indexOf(e.keyCode) == -1) {
+      t.activeKeys.push(e.keyCode);
+    }
+  };
+
+  // point a listener at this
+  this.keyReleased = function(e) {
+    var e = getEvent(e),
+      key = t.activeKeys.indexOf(e.keyCode);
+    if(key !== -1) {
+      t.activeKeys.splice(key,1);
+    }
+  };
+
   this.isKeyPressed = function(e,keyCode) {
-    var e = e || window.event;
+    var e = getEvent(e);
     if(e.keyCode && e.keyCode == keyCode) {
       return true;
     } else {
@@ -74,4 +115,18 @@ Input.prototype.gamepadEvent = function() {
 
   window.addEventListener("MozGamepadConnected", gamepadConnected, false);
 }
+*/
+
+/*
+function gamepadConnected(e) {
+  console.log(e);
+}
+
+function gamepadDisconnected(e) {
+  console.log(e);
+}
+
+
+window.addEventListener("MozGamepadConnected", gamepadConnected, false);
+window.addEventListener("MozGamepadDisconnected", gamepadDisconnected, false);
 */
