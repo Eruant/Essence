@@ -2,12 +2,12 @@
 * FILE I/O
 * ====================
 * Author:   Matt Gale (info@littleball.co.uk)
-* Version:  0.0.1
+* Version:  0.0.2
 *
 * This module deals with reading and writing files
 */
 
-function FileIO() {
+window.essence.fileIO = (function() {
   this.readAsset = function(fileName) {
   }
 
@@ -16,4 +16,4 @@ function FileIO() {
 
   this.writeFile = function(fileName) {
   }
-}
+});

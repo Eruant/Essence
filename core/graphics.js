@@ -2,12 +2,12 @@
 * Graphics
 * ====================
 * Author:   Matt Gale (info@littleball.co.uk)
-* Version:  0.0.1
+* Version:  0.0.2
 *
 * This module deals with drawing graphics
 */
 
-function Graphics() {
+window.essence.graphics = (function() {
 
   this.newPixmap = function() {
   }
@@ -32,9 +32,9 @@ function Graphics() {
 
   this.getHeight = function() {
   }
-}
+})();
 
-function Pixmap() {
+window.essence.pixmap = (function() {
   
   this.getWidth = function() {
   }
@@ -48,4 +48,4 @@ function Pixmap() {
   this.dispose = function() {
   }
 
-}
+})();

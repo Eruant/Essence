@@ -2,12 +2,12 @@
 * ESSENCE AUDIO
 * ====================
 * Author:   Matt Gale (info@littleball.co.uk)
-* Version:  0.0.3
+* Version:  0.0.4
 *
 * This module deals with sound fx and music
 */
 
-Essence.prototype.Audio = new function() {
+window.essence.audio = (function() {
 
   // object to load sounds into
   this.sounds = new Object();
@@ -155,4 +155,4 @@ Essence.prototype.Audio = new function() {
     delete this.sounds[handle];
   };
 
-};
+})();

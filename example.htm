@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>  
+  <meta charset="utf-8">
+  <title>Essesnce Test</title>
+</head>
+<body style="margin:0; overflow:hidden;">
+
+<script type="text/javascript" src="core/essence.js"></script>
+<script type="text/javascript">
+(function(e){
+
+  e.car = {
+      x: 50
+    , y: 100
+    , angle: 0.3
+    , speed: 1
+  };
+
+  var car = e.car
+    , sys = e.system
+    , forward = false
+    , left = false
+    , right = false
+  ;
+
+  car.update = function(time) {
+    var dx = Math.cos(car.angle) * car.speed
+      , dy = Math.sin(car.angle) * car.speed
+    ;
+
+    if(car.speed > 0) {
+      car.speed -= 0.1;
+    }
+    car.x += dx;
+    car.y += dy;
+    
+    if(forward && car.speed < 20) {
+      car.speed += 0.5;
+    }
+    if(left) {
+      car.angle -= 0.05;
+    }
+    if(right) {
+      car.angle += 0.05;
+    }
+    
+    if(car.x > sys.width + 20) {
+      car.x = -20;
+    } else if(car.x < -20) {
+      car.x = sys.width + 20;
+    }
+    if(car.y > sys.height + 20) {
+      car.y = -20;
+    } else if(car.y < -20) {
+      car.y = sys.height + 20;
+    }
+
+    
+  };
+
+  car.draw = function(time) {
+    var ctx = e.system.ctx;
+
+    ctx.save();
+    ctx.translate(car.x,car.y);
+    ctx.rotate(car.angle);
+    ctx.beginPath();
+    ctx.fillStyle = '#f00';
+    ctx.fillRect(-40,0,80,40);
+    ctx.fillStyle = '#000';
+    ctx.fillRect(-35,-3,15,3);
+    ctx.fillRect(-35,40,15,3);
+    ctx.fillRect(20,-3,15,3);
+    ctx.fillRect(20,40,15,3);
+    ctx.fillStyle = '#ccf';
+    ctx.fillRect(0,5,10,30);
+    ctx.fillRect(-30,5,5,30);
+    ctx.closePath();
+    ctx.fill();
+    ctx.restore();
+  };
+
+  window.addEventListener('keydown',function(e){
+    var e = e || window.event;
+    if(e.keyCode == 38) {
+      forward = true;
+    }
+    if(e.keyCode == 37) {
+      left = true;
+      right = false;
+    }
+    if(e.keyCode == 39) {
+      right = true;
+      left = false;
+    }
+
+  }, false);
+
+  window.addEventListener('keyup',function(e){
+    var e = e || window.event;
+    if(e.keyCode == 38) {
+      forward = false;
+    }
+    if(e.keyCode == 37) {
+      left = false;
+    }
+    if(e.keyCode == 39) {
+      right = false;
+    }
+
+  }, false);
+
+
+  e.system.update.methods.push(car.update);
+  e.system.update.methods.push(car.draw);
+  e.system.init();
+
+})(window.essence);
+</script>
+</body>
+<html>

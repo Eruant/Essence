@@ -2,12 +2,12 @@
 * INPUT
 * ====================
 * Author:   Matt Gale (info@littleball.co.uk)
-* Version:  0.0.1
+* Version:  0.0.2
 *
 * This module deals with getting user input from the device
 */
 
-Essence.prototype.Input = new function() {
+window.essence.input = (function() {
 
   // --- variables
 
@@ -82,7 +82,7 @@ Essence.prototype.Input = new function() {
 
   this.getTouchEvents = function() {
   }
-}
+})();
 
  // not sure if this is the best way to add the key events
 
