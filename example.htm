@@ -31,18 +31,18 @@
 
     if(car.speed > 0) {
       car.speed -= 0.1;
+      if(left) {
+        car.angle -= 0.05;
+      }
+      if(right) {
+        car.angle += 0.05;
+      }
     }
     car.x += dx;
     car.y += dy;
     
     if(forward && car.speed < 20) {
       car.speed += 0.5;
-    }
-    if(left) {
-      car.angle -= 0.05;
-    }
-    if(right) {
-      car.angle += 0.05;
     }
     
     if(car.x > sys.width + 20) {
