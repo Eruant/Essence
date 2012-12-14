@@ -2,7 +2,7 @@
 * ESSENCE
 * ====================
 * Author:   Matt Gale (matt@littleball.co.uk)
-* Version:  0.0.2
+* Version:  0.0.3
 *
 * Essence is a framework for developing javascript games
 */
@@ -24,6 +24,11 @@ window.requestAnimationFrame = (function() {
   var canvas = document.createElement('canvas')
     , ctx = canvas.getContext('2d')
   ;
+
+  // check canvas support
+  if(!ctx){
+    window.alert('Opps! It appears that your browser does not support canvas.');
+  }
 
   // set up global function
   window.essence = {};
