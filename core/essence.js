@@ -2,7 +2,7 @@
 * ESSENCE
 * ====================
 * Author:   Matt Gale (matt@littleball.co.uk)
-* Version:  0.0.3
+* Version:  0.0.4
 *
 * Essence is a framework for developing javascript games
 */
