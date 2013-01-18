@@ -27,7 +27,7 @@ window.requestAnimationFrame = (function() {
 
   // check canvas support
   if(!ctx){
-    window.alert('Opps! It appears that your browser does not support canvas.');
+    window.alert('Opps! It appears that your browser does not support canvas. You won\'t be able to use this feature.');
   }
 
   // set up global function
